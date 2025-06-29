@@ -1,0 +1,67 @@
+repos:
+  # Secret detection
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package.lock.json
+
+  # Code formatting and linting
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+
+  # TypeScript and JavaScript linting
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: bunx eslint
+        language: system
+        files: \.(ts|tsx|js|jsx)$
+        args: [--fix]
+
+  # Environment variable validation
+  - repo: local
+    hooks:
+      - id: env-validation
+        name: Environment Variable Validation
+        entry: bash
+        language: system
+        args:
+          - -c
+          - |
+            # Check for potential API key patterns
+            if grep -r "sk-[a-zA-Z0-9]" . --exclude-dir=node_modules --exclude-dir=.git; then
+              echo "Potential OpenAI API key found in code!"
+              exit 1
+            fi
+            if grep -r "ghp_[a-zA-Z0-9]" . --exclude-dir=node_modules --exclude-dir=.git; then
+              echo "Potential GitHub token found in code!"
+              exit 1
+            fi
+            if grep -r "claude-[a-zA-Z0-9]" . --exclude-dir=node_modules --exclude-dir=.git; then
+              echo "Potential Anthropic API key found in code!"
+              exit 1
+            fi
+            echo "Environment variable validation passed"
+        files: \.(ts|tsx|js|jsx|json|yml|yaml)$
+
+  # TypeScript type checking
+  - repo: local
+    hooks:
+      - id: typescript-check
+        name: TypeScript Type Check
+        entry: bunx tsc
+        language: system
+        args: [--noEmit]
+        files: \.(ts|tsx)$
+        pass_filenames: false
