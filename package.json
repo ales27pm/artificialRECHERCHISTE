@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint --config .eslintrc.js jest.config.js jest.setup.ts src/utils",
+    "test": "jest"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -29,7 +31,7 @@
     "@react-navigation/native-stack": "^7.3.2",
     "@react-navigation/stack": "^7.1.1",
     "@shopify/flash-list": "1.7.6",
-    "@shopify/react-native-skia": "v2.0.0-next.4",
+    "@shopify/react-native-skia": "2.1.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "expo": "^53.0.9",
@@ -115,14 +117,22 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^12.8.1",
+    "@types/jest": "^29.5.14",
     "@types/react": "~19.0.10",
     "@typescript-eslint/eslint-plugin": "^8.29.1",
     "@typescript-eslint/parser": "^8.29.1",
     "babel-plugin-module-resolver": "^5.0.2",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "jest-expo": "^53.0.10",
+    "react-native-worklets": "^0.5.2",
+    "react-test-renderer": "19.0.0",
     "typescript": "~5.8.3"
   },
   "private": true,

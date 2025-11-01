@@ -1,7 +1,7 @@
 {
   "$schema": ".agents/schemas/index.schema.json",
   "version": 1,
-  "generated_at": "2025-11-01T07:02:25Z",
+  "generated_at": "2025-11-01T07:39:54Z",
   "modules": [
     {
       "name": "core",
@@ -47,6 +47,11 @@
       "name": "utils",
       "path": "src/utils",
       "tasks_file": ".agents/modules/utils/tasks.json"
+    },
+    {
+      "name": "__tests__",
+      "path": "src/utils/__tests__",
+      "tasks_file": ".agents/modules/__tests__/tasks.json"
     }
   ],
   "docs": [

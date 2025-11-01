@@ -1,0 +1,6 @@
+{
+  "$schema": ".agents/schemas/tasks.schema.json",
+  "module": "__tests__",
+  "updated_at": "2025-11-01T07:39:54Z",
+  "tasks": []
+}
