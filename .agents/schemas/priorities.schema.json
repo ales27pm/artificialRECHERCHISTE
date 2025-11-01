@@ -5,7 +5,7 @@
   "properties": {
     "$schema": { "type": "string" },
     "version": { "type": "integer" },
-    "updated_at": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
     "policy": {
       "type": "object",
       "required": ["strategy"],

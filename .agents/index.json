@@ -1,7 +1,7 @@
 {
   "$schema": ".agents/schemas/index.schema.json",
   "version": 1,
-  "generated_at": "2025-11-01T07:39:54Z",
+  "generated_at": "2025-11-01T07:55:04Z",
   "modules": [
     {
       "name": "core",
@@ -56,12 +56,32 @@
   ],
   "docs": [
     {
+      "file": "AGENTS.md",
+      "title": "Runtime Contract"
+    },
+    {
       "file": "VISION.md",
       "title": "Vision"
     },
     {
       "file": "OVERVIEW.md",
       "title": "Overview"
+    },
+    {
+      "file": "README-SECURITY.md",
+      "title": "Security"
+    },
+    {
+      "file": "RELEASE_NOTES.md",
+      "title": "Release Notes"
+    },
+    {
+      "file": "SEARCH_SERVICE_FIXES.md",
+      "title": "Search Service Fixes"
+    },
+    {
+      "file": "ReadMeKen.md",
+      "title": "ReadMeKen"
     }
   ]
 }

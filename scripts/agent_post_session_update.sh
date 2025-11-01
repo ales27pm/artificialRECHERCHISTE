@@ -34,7 +34,17 @@ if [ -f Cargo.toml ]; then cargo test --all --quiet || true; fi
 echo "[post-session] Scan + validate..."
 python3 scripts/agent_scan.py --refresh-index --validate || {
   fn=".agents/alerts/${TS}.json"
-  echo "{"when":"${TS}","session_id":"${SESSION_ID}","reason":"scan_validate_failed"}" > "$fn"
+  python3 - <<PY
+import json
+from pathlib import Path
+
+payload = {
+    "when": "${TS}",
+    "session_id": "${SESSION_ID}",
+    "reason": "scan_validate_failed",
+}
+Path("${fn}").write_text(json.dumps(payload), encoding="utf-8")
+PY
   abort "scan/validate failed (alert: $fn)"
 }
 
@@ -97,10 +107,10 @@ if [ "$PUSH_SKIPPED" -eq 1 ]; then
 fi
 if [ "$PUSH_OK" -ne 1 ]; then
   LEDGER_EXIT=1
-  if [ "$LEDGER_NOTES_JSON" = "[]" ]; then
-    LEDGER_NOTES_JSON='["git_push_failed"]'
-  else
+  if [ "$PUSH_SKIPPED" -eq 1 ]; then
     LEDGER_NOTES_JSON='["push_skipped_no_upstream","git_push_failed"]'
+  else
+    LEDGER_NOTES_JSON='["git_push_failed"]'
   fi
 fi
 
@@ -120,7 +130,18 @@ PY
 
 if [ "$PUSH_ATTEMPTED" -eq 1 ] && [ "$PUSH_OK" -ne 1 ]; then
   FN=".agents/alerts/${TS}.json"
-  echo "{"when":"${TS}","session_id":"${SESSION_ID}","reason":"git_push_failed","attempts":${RETRIES}}" > "$FN"
+  python3 - <<PY
+import json
+from pathlib import Path
+
+payload = {
+    "when": "${TS}",
+    "session_id": "${SESSION_ID}",
+    "reason": "git_push_failed",
+    "attempts": ${RETRIES},
+}
+Path("${FN}").write_text(json.dumps(payload), encoding="utf-8")
+PY
   abort "Push failed; alert recorded: $FN"
 fi
 

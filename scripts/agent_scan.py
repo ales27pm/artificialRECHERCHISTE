@@ -22,6 +22,15 @@ SCHEMA_FILES = {
 }
 SEARCH_ROOTS: Iterable[str] = ("src", "app", "apps", "packages", "services", "modules")
 CODE_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx", ".go", ".rs", ".swift", ".kt", ".java"}
+DOCS_DEFAULT: List[Dict[str, str]] = [
+    {"file": "AGENTS.md", "title": "Runtime Contract"},
+    {"file": "VISION.md", "title": "Vision"},
+    {"file": "OVERVIEW.md", "title": "Overview"},
+    {"file": "README-SECURITY.md", "title": "Security"},
+    {"file": "RELEASE_NOTES.md", "title": "Release Notes"},
+    {"file": "SEARCH_SERVICE_FIXES.md", "title": "Search Service Fixes"},
+    {"file": "ReadMeKen.md", "title": "ReadMeKen"},
+]
 
 
 class SchemaValidationError(Exception):
@@ -81,8 +90,9 @@ def _check_type(value: Any, expected: str, path: str) -> None:
     if expected == "integer":
         if not isinstance(value, int) or isinstance(value, bool):
             raise SchemaValidationError(f"{path} expected integer, found {type(value).__name__}")
-    if expected == "number" and not isinstance(value, (int, float)):
-        raise SchemaValidationError(f"{path} expected number, found {type(value).__name__}")
+    if expected == "number":
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
+            raise SchemaValidationError(f"{path} expected number, found {type(value).__name__}")
     if expected == "boolean" and not isinstance(value, bool):
         raise SchemaValidationError(f"{path} expected boolean, found {type(value).__name__}")
     if expected == "null" and value is not None:
@@ -165,7 +175,7 @@ def discover_modules() -> List[Dict[str, str]]:
             if not has_code:
                 continue
             rel_path = candidate.relative_to(ROOT)
-            rel_key = str(rel_path).replace("\\", "/")
+            rel_key = rel_path.as_posix()
             if rel_key in seen:
                 continue
             modules.append(
@@ -189,34 +199,33 @@ def discover_modules() -> List[Dict[str, str]]:
 
 
 def build_index(existing: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-    discovered = {module["name"]: module for module in discover_modules()}
+    discovered_modules = discover_modules()
+    discovered = {module["path"]: module for module in discovered_modules}
     modules_dir = AGENTS / "modules"
     for tasks_file in modules_dir.glob("*/tasks.json"):
         module_name = tasks_file.parent.name
-        if module_name in discovered:
+        tasks_rel = tasks_file.relative_to(ROOT).as_posix()
+        if any(mod["tasks_file"] == tasks_rel for mod in discovered.values()):
             continue
         fallback_path = Path("src") / module_name
         if fallback_path.exists():
             rel_path = fallback_path.as_posix()
         else:
             rel_path = tasks_file.parent.relative_to(ROOT).as_posix()
-        discovered[module_name] = {
+        discovered[rel_path] = {
             "name": module_name,
             "path": rel_path,
-            "tasks_file": tasks_file.relative_to(ROOT).as_posix(),
+            "tasks_file": tasks_rel,
         }
     if existing:
         for module in existing.get("modules", []):
-            name = module.get("name")
-            if not name:
+            key = module.get("path") or module.get("name")
+            if not key:
                 continue
-            if name not in discovered:
-                discovered[name] = module
+            if key not in discovered:
+                discovered[key] = module
     modules = sorted(discovered.values(), key=lambda item: (item.get("path", item["name"]), item["name"]))
-    docs = [
-        {"file": "VISION.md", "title": "Vision"},
-        {"file": "OVERVIEW.md", "title": "Overview"},
-    ]
+    docs = list(DOCS_DEFAULT)
     if existing and existing.get("modules") == modules and existing.get("docs") == docs:
         generated_at = existing.get("generated_at", "")
     else:

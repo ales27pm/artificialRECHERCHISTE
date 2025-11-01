@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
 
       - name: Refresh and validate agent metadata
         run: python3 scripts/agent_scan.py --refresh-index --validate
