@@ -1,0 +1,55 @@
+{
+  "$schema": ".agents/schemas/tasks.schema.json",
+  "module": "core",
+  "updated_at": "2025-11-01T07:06:28Z",
+  "tasks": [
+    {
+      "id": "core:bootstrap-structure",
+      "title": "Establish validated agent control plane and schemas",
+      "status": "done",
+      "role": "Planner",
+      "acceptance": [
+        "All `.agents/schemas/*.json` validate corresponding files",
+        "`scripts/agent_post_session_update.sh` completes successfully on a clean repo",
+        "CI/pipeline step exists to validate JSON and fail on drift"
+      ],
+      "impl": {
+        "steps": [
+          "Validate schemas against .agents/*.json and module tasks",
+          "Wire bootstrap+scan flow to (re)generate index safely",
+          "Add idempotent guards and retries to commit/push"
+        ]
+      },
+      "refs": [
+        {
+          "file": ".agents/schemas/index.schema.json",
+          "anchor": "schema:index"
+        },
+        {
+          "file": ".agents/schemas/priorities.schema.json",
+          "anchor": "schema:priorities"
+        },
+        {
+          "file": ".agents/schemas/tasks.schema.json",
+          "anchor": "schema:tasks"
+        },
+        {
+          "file": "scripts/agent_post_session_update.sh",
+          "anchor": "script:post-session"
+        }
+      ],
+      "notes": ["Added schema-backed validation and CI guard rails."],
+      "next_notes": [
+        "After this, enable module discovery for additional languages and auto-create `tasks.json` per module."
+      ],
+      "risk_tags": [],
+      "links_to_vision": ["#vision"],
+      "proofs": {
+        "scan_validation": "python3 scripts/agent_scan.py --refresh-index --validate",
+        "prettier_initial": "npx prettier --write .agents/index.json .agents/priorities.json .agents/modules/core/tasks.json .agents/schemas/index.schema.json .agents/schemas/priorities.schema.json .agents/schemas/tasks.schema.json .github/workflows/agent-control-plane.yml",
+        "prettier_followup": "npx prettier --write .agents/priorities.json .agents/modules/core/tasks.json",
+        "ci_workflow": ".github/workflows/agent-control-plane.yml"
+      }
+    }
+  ]
+}

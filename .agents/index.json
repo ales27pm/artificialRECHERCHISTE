@@ -1,0 +1,62 @@
+{
+  "$schema": ".agents/schemas/index.schema.json",
+  "version": 1,
+  "generated_at": "2025-11-01T07:02:25Z",
+  "modules": [
+    {
+      "name": "core",
+      "path": ".agents/modules/core",
+      "tasks_file": ".agents/modules/core/tasks.json"
+    },
+    {
+      "name": "api",
+      "path": "src/api",
+      "tasks_file": ".agents/modules/api/tasks.json"
+    },
+    {
+      "name": "components",
+      "path": "src/components",
+      "tasks_file": ".agents/modules/components/tasks.json"
+    },
+    {
+      "name": "config",
+      "path": "src/config",
+      "tasks_file": ".agents/modules/config/tasks.json"
+    },
+    {
+      "name": "navigation",
+      "path": "src/navigation",
+      "tasks_file": ".agents/modules/navigation/tasks.json"
+    },
+    {
+      "name": "screens",
+      "path": "src/screens",
+      "tasks_file": ".agents/modules/screens/tasks.json"
+    },
+    {
+      "name": "state",
+      "path": "src/state",
+      "tasks_file": ".agents/modules/state/tasks.json"
+    },
+    {
+      "name": "types",
+      "path": "src/types",
+      "tasks_file": ".agents/modules/types/tasks.json"
+    },
+    {
+      "name": "utils",
+      "path": "src/utils",
+      "tasks_file": ".agents/modules/utils/tasks.json"
+    }
+  ],
+  "docs": [
+    {
+      "file": "VISION.md",
+      "title": "Vision"
+    },
+    {
+      "file": "OVERVIEW.md",
+      "title": "Overview"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "ts": "2025-11-01T07:08:10Z",
+  "session_id": "f503df08-d2b9-4b67-8894-903c85400e38",
+  "git_head": "6bafb09919b7a565cf5f1f7323d492d60d584820",
+  ".agents/index.json": {
+    "$schema": ".agents/schemas/index.schema.json",
+    "version": 1,
+    "generated_at": "2025-11-01T07:02:25Z",
+    "modules": [
+      {
+        "name": "core",
+        "path": ".agents/modules/core",
+        "tasks_file": ".agents/modules/core/tasks.json"
+      },
+      {
+        "name": "api",
+        "path": "src/api",
+        "tasks_file": ".agents/modules/api/tasks.json"
+      },
+      {
+        "name": "components",
+        "path": "src/components",
+        "tasks_file": ".agents/modules/components/tasks.json"
+      },
+      {
+        "name": "config",
+        "path": "src/config",
+        "tasks_file": ".agents/modules/config/tasks.json"
+      },
+      {
+        "name": "navigation",
+        "path": "src/navigation",
+        "tasks_file": ".agents/modules/navigation/tasks.json"
+      },
+      {
+        "name": "screens",
+        "path": "src/screens",
+        "tasks_file": ".agents/modules/screens/tasks.json"
+      },
+      {
+        "name": "state",
+        "path": "src/state",
+        "tasks_file": ".agents/modules/state/tasks.json"
+      },
+      {
+        "name": "types",
+        "path": "src/types",
+        "tasks_file": ".agents/modules/types/tasks.json"
+      },
+      {
+        "name": "utils",
+        "path": "src/utils",
+        "tasks_file": ".agents/modules/utils/tasks.json"
+      }
+    ],
+    "docs": [
+      {
+        "file": "VISION.md",
+        "title": "Vision"
+      },
+      {
+        "file": "OVERVIEW.md",
+        "title": "Overview"
+      }
+    ]
+  },
+  ".agents/priorities.json": {
+    "$schema": ".agents/schemas/priorities.schema.json",
+    "version": 1,
+    "updated_at": "2025-11-01T07:06:28Z",
+    "policy": {
+      "strategy": "critical_path_first",
+      "tie_breakers": [
+        "dependency_depth",
+        "risk",
+        "value"
+      ]
+    },
+    "queue": [
+      {
+        "task_id": "core:bootstrap-structure",
+        "title": "Establish validated agent control plane and schemas",
+        "file": ".agents/modules/core/tasks.json",
+        "priority": 100,
+        "status": "done",
+        "role": "Planner",
+        "risk_tags": [],
+        "links_to_vision": [
+          "#vision"
+        ]
+      }
+    ]
+  },
+  ".agents/metrics.json": {
+    "version": 1,
+    "updated_at": "bootstrap",
+    "sessions_total": 0,
+    "tasks_completed": 0,
+    "mean_time_to_green_sec": 0,
+    "retries_push": 0
+  }
+}

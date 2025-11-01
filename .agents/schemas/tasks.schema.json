@@ -1,0 +1,63 @@
+{
+  "$id": "schema:tasks",
+  "type": "object",
+  "required": ["module", "updated_at", "tasks"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "module": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status", "acceptance", "impl", "refs"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "status": { "type": "string", "enum": ["todo", "doing", "done", "blocked"] },
+          "role": { "type": "string", "enum": ["Planner", "Coder", "Tester", "Reviewer"] },
+          "acceptance": { "type": "array", "items": { "type": "string" } },
+          "impl": {
+            "type": "object",
+            "required": ["steps"],
+            "properties": {
+              "steps": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          },
+          "refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["file"],
+              "properties": {
+                "file": { "type": "string" },
+                "line": { "type": "integer" },
+                "end_line": { "type": "integer" },
+                "anchor": { "type": "string" },
+                "symbol": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "notes": { "type": "array", "items": { "type": "string" } },
+          "next_notes": { "type": "array", "items": { "type": "string" } },
+          "risk_tags": { "type": "array", "items": { "type": "string" } },
+          "links_to_vision": { "type": "array", "items": { "type": "string" } },
+          "proofs": {
+            "type": "object",
+            "properties": {
+              "tests_passed": { "type": "boolean" },
+              "coverage": { "type": "number" },
+              "lint_clean": { "type": "boolean" },
+              "security_scan": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
