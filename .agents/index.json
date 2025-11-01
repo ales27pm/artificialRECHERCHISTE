@@ -1,0 +1,87 @@
+{
+  "$schema": ".agents/schemas/index.schema.json",
+  "version": 1,
+  "generated_at": "2025-11-01T07:55:04Z",
+  "modules": [
+    {
+      "name": "core",
+      "path": ".agents/modules/core",
+      "tasks_file": ".agents/modules/core/tasks.json"
+    },
+    {
+      "name": "api",
+      "path": "src/api",
+      "tasks_file": ".agents/modules/api/tasks.json"
+    },
+    {
+      "name": "components",
+      "path": "src/components",
+      "tasks_file": ".agents/modules/components/tasks.json"
+    },
+    {
+      "name": "config",
+      "path": "src/config",
+      "tasks_file": ".agents/modules/config/tasks.json"
+    },
+    {
+      "name": "navigation",
+      "path": "src/navigation",
+      "tasks_file": ".agents/modules/navigation/tasks.json"
+    },
+    {
+      "name": "screens",
+      "path": "src/screens",
+      "tasks_file": ".agents/modules/screens/tasks.json"
+    },
+    {
+      "name": "state",
+      "path": "src/state",
+      "tasks_file": ".agents/modules/state/tasks.json"
+    },
+    {
+      "name": "types",
+      "path": "src/types",
+      "tasks_file": ".agents/modules/types/tasks.json"
+    },
+    {
+      "name": "utils",
+      "path": "src/utils",
+      "tasks_file": ".agents/modules/utils/tasks.json"
+    },
+    {
+      "name": "__tests__",
+      "path": "src/utils/__tests__",
+      "tasks_file": ".agents/modules/__tests__/tasks.json"
+    }
+  ],
+  "docs": [
+    {
+      "file": "AGENTS.md",
+      "title": "Runtime Contract"
+    },
+    {
+      "file": "VISION.md",
+      "title": "Vision"
+    },
+    {
+      "file": "OVERVIEW.md",
+      "title": "Overview"
+    },
+    {
+      "file": "README-SECURITY.md",
+      "title": "Security"
+    },
+    {
+      "file": "RELEASE_NOTES.md",
+      "title": "Release Notes"
+    },
+    {
+      "file": "SEARCH_SERVICE_FIXES.md",
+      "title": "Search Service Fixes"
+    },
+    {
+      "file": "ReadMeKen.md",
+      "title": "ReadMeKen"
+    }
+  ]
+}
